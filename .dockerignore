@@ -1,0 +1,5 @@
+.dbdata
+node_modules
+.dockerignore
+docker-compose.yml
+Dockerfile
