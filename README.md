@@ -1,73 +1,98 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+## Appendix
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+### Prerequisite
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+node --version
 
-## Description
+### Install NestJS
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+npm i -g @nestjs/cli
+nest --version
 
-## Installation
+### Generate New Project
 
-```bash
-$ npm install
-```
+nest new ...
+npm run start:dev
+localhost:3000
 
-## Running the app
+### Generate Module
 
-```bash
-# development
-$ npm run start
+nest g mo ...
 
-# watch mode
-$ npm run start:dev
+### Generate Controller
 
-# production mode
-$ npm run start:prod
-```
+nest g co ...
+nest g co ... --no-spec
+nest g co ... --dry-run
 
-## Test
+### Generate Service
 
-```bash
-# unit tests
-$ npm run test
+nest g s ...
 
-# e2e tests
-$ npm run test:e2e
+### Generate class (entity/DTO)
 
-# test coverage
-$ npm run test:cov
-```
+nest g cl ... --no-spec
 
-## Support
+### Generate guard
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+nest g gu ... --no-spec
 
-## Stay in touch
+### Dependencies
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### 'Config'
 
-## License
+npm i @nestjs/config
 
-Nest is [MIT licensed](LICENSE).
+### 'TypeOrm' PostgreSQL
+
+npm i @nestjs/typeorm typeorm pg
+
+### 'ValidationPipe'
+
+npm i class-validator class-transformer reflect-metadata
+
+### 'PartialType'
+
+npm i @nestjs/mapped-types
+
+### 'bcrypt'
+
+npm i bcryptjs
+npm i -D @types/bcryptjs
+
+### 'Cookie-Parser'
+
+npm i cookie-parser
+npm i -D @types/cookie-parser
+
+### 'Passport, JWT'
+
+npm i @nestjs/passport passport passport-local
+npm i -D @types/passport-local
+npm i @nestjs/jwt passport-jwt
+npm i -D @types/passport-jwt
+
+### 'Cache, Redis'
+
+npm i cache-manager
+npm i -D @types/cache-manager
+npm i cache-manager-redis-store
+npm i redis
+npm i -D @types/redis
+
+### 'Events'
+
+npm i @nestjs/event-emitter
+
+### 'Faker'
+
+npm i -D faker @types/faker
+
+### 'mailer'
+
+npm i @nestjs-modules/mailer nodemailer
+npm i -D @types/nodemailer
+
+### 'Stripe'
+
+npm i nestjs-stripe
