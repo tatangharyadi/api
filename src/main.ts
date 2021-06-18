@@ -7,6 +7,7 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule, {
         logger: ['error', 'warn', 'debug', 'log'],
     });
+    app.setGlobalPrefix('api');
     app.useGlobalPipes(new ValidationPipe());
     app.use(cookieParser());
     await app.listen(3000);

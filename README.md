@@ -81,6 +81,10 @@ npm i @nestjs/event-emitter
 npm i @nestjs-modules/mailer nodemailer
 npm i -D @types/nodemailer
 
+### 'Multer'
+
+npm i -D @types/multer
+
 ### 'Cache, Redis'
 
 npm i cache-manager
