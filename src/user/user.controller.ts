@@ -14,6 +14,8 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthService } from 'src/auth/auth.service';
+import { UserCreatedEvent } from './events/user-created.event';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Controller('users')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -21,6 +23,7 @@ export class UserController {
     constructor(
         private readonly userService: UserService,
         private readonly authService: AuthService,
+        private readonly eventEmitter: EventEmitter2,
     ) {}
 
     @Post()
@@ -35,7 +38,6 @@ export class UserController {
             where: [{ email: body.email }],
         });
 
-        console.log(existingUser);
         if (existingUser) {
             throw new BadRequestException('Email already registered.');
         }
@@ -46,6 +48,10 @@ export class UserController {
             ...data,
             password: hashPassword,
         });
+
+        const userCreatedEvent = new UserCreatedEvent();
+        userCreatedEvent.email = data.email;
+        this.eventEmitter.emit('user.created', userCreatedEvent);
 
         return this.userService.findOne({
             where: [{ email: body.email }],

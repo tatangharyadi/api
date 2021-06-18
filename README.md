@@ -72,6 +72,15 @@ npm i -D @types/passport-local
 npm i @nestjs/jwt passport-jwt
 npm i -D @types/passport-jwt
 
+### 'Events'
+
+npm i @nestjs/event-emitter
+
+### 'mailer'
+
+npm i @nestjs-modules/mailer nodemailer
+npm i -D @types/nodemailer
+
 ### 'Cache, Redis'
 
 npm i cache-manager
@@ -80,18 +89,9 @@ npm i cache-manager-redis-store
 npm i redis
 npm i -D @types/redis
 
-### 'Events'
-
-npm i @nestjs/event-emitter
-
 ### 'Faker'
 
 npm i -D faker @types/faker
-
-### 'mailer'
-
-npm i @nestjs-modules/mailer nodemailer
-npm i -D @types/nodemailer
 
 ### 'Stripe'
 
