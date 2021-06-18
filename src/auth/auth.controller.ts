@@ -1,11 +1,8 @@
 import {
-    BadRequestException,
-    Body,
     ClassSerializerInterceptor,
     Controller,
     Get,
     Post,
-    Request,
     Res,
     UseGuards,
     UseInterceptors,
@@ -15,16 +12,11 @@ import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { CurrentUser } from './current-user.decorator';
 import { User } from '../user/entities/user.entity';
-import { UserService } from '../user/user.service';
-import { RegisterUserDto } from './dto/register-user.dto';
 
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
-    constructor(
-        private userService: UserService,
-        private readonly authService: AuthService,
-    ) {}
+    constructor(private readonly authService: AuthService) {}
 
     @Post('login')
     @UseGuards(AuthGuard('local'))
