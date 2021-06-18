@@ -6,18 +6,50 @@ import {
     Patch,
     Param,
     Delete,
+    BadRequestException,
+    UseInterceptors,
+    ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthService } from 'src/auth/auth.service';
 
-@Controller('user')
+@Controller('users')
+@UseInterceptors(ClassSerializerInterceptor)
 export class UserController {
-    constructor(private readonly userService: UserService) {}
+    constructor(
+        private readonly userService: UserService,
+        private readonly authService: AuthService,
+    ) {}
 
     @Post()
-    create(@Body() createUserDto: CreateUserDto) {
-        return this.userService.save(createUserDto);
+    async create(@Body() body: CreateUserDto) {
+        const { passwordConfirm, ...data } = body;
+
+        if (body.password !== passwordConfirm) {
+            throw new BadRequestException('Confirm password do not match.');
+        }
+
+        const existingUser = await this.userService.findOne({
+            where: [{ email: body.email }],
+        });
+
+        console.log(existingUser);
+        if (existingUser) {
+            throw new BadRequestException('Email already registered.');
+        }
+
+        const hashPassword = await this.authService.hashPassword(body.password);
+
+        await this.userService.save({
+            ...data,
+            password: hashPassword,
+        });
+
+        return this.userService.findOne({
+            where: [{ email: body.email }],
+        });
     }
 
     @Get()

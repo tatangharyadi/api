@@ -26,30 +26,6 @@ export class AuthController {
         private readonly authService: AuthService,
     ) {}
 
-    @Post(['register'])
-    async register(@Body() body: RegisterUserDto) {
-        const { passwordConfirm, ...data } = body;
-
-        if (body.password !== passwordConfirm) {
-            throw new BadRequestException('Confirm password do not match.');
-        }
-
-        const existingUser = await this.userService.findOne({
-            where: [{ email: body.email }],
-        });
-
-        if (existingUser) {
-            throw new BadRequestException('Email already registered.');
-        }
-
-        const hashPassword = await this.authService.hashPassword(body.password);
-
-        return this.userService.save({
-            ...data,
-            password: hashPassword,
-        });
-    }
-
     @Post('login')
     @UseGuards(AuthGuard('local'))
     async login(
