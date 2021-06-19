@@ -42,6 +42,8 @@ nest g gu ... --no-spec
 ### 'Config'
 
 npm i @nestjs/config
+npm i @hapi/joi
+npm i -D @types/hapi\_\_joi
 
 ### 'TypeOrm' PostgreSQL
 
