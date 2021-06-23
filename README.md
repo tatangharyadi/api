@@ -51,7 +51,7 @@ npm i @nestjs/typeorm typeorm pg
 
 ### 'ValidationPipe'
 
-npm i class-validator class-transformer reflect-metadata
+npm i class-validator class-transformer
 
 ### 'PartialType'
 
