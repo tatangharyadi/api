@@ -1,4 +1,5 @@
 import {
+    Body,
     ClassSerializerInterceptor,
     Controller,
     Get,
@@ -10,13 +11,31 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
-import { CurrentUser } from './current-user.decorator';
-import { User } from '../user/entities/user.entity';
+import { CurrentUser } from './decorators/current-user.decorator';
+import { User } from '../users/entities/user.entity';
+import { UsersService } from 'src/users/users.service';
+import { RegisterUserDto } from './dto/register-user.dto';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
-    constructor(private readonly authService: AuthService) {}
+    constructor(
+        private readonly authService: AuthService,
+        private readonly userService: UsersService,
+        private readonly eventEmitter: EventEmitter2,
+    ) {}
+
+    @Post('register')
+    async register(@Body() body: RegisterUserDto) {
+        const user = await this.userService.save(body);
+
+        this.eventEmitter.emit('user.created', { email: user.email });
+
+        return await this.userService.findOne({
+            where: [{ email: user.email }],
+        });
+    }
 
     @Post('login')
     @UseGuards(AuthGuard('local'))

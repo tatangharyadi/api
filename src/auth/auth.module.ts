@@ -1,9 +1,10 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CommonModule } from 'src/common/common.module';
-import { UserModule } from 'src/user/user.module';
+import { UsersModule } from 'src/users/users.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { RolesGuard } from './guards/roles.guard';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 
@@ -11,9 +12,9 @@ import { LocalStrategy } from './strategies/local.strategy';
     imports: [
         CommonModule, //
         ConfigModule,
-        UserModule,
+        UsersModule,
     ],
-    providers: [LocalStrategy, JwtStrategy, AuthService],
+    providers: [LocalStrategy, JwtStrategy, RolesGuard, AuthService],
     controllers: [AuthController],
     exports: [AuthService],
 })
