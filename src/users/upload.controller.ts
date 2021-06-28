@@ -1,4 +1,5 @@
 import {
+    BadRequestException,
     Controller,
     Get,
     Param,
@@ -8,35 +9,25 @@ import {
     UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { saveImage } from 'src/common/image.storage';
+import { join } from 'path';
 
 @Controller()
 export class UploadController {
     constructor(private readonly configService: ConfigService) {}
 
     @Post('upload')
-    @UseInterceptors(
-        FileInterceptor('image', {
-            storage: diskStorage({
-                destination: './uploads',
-                filename(_, file, callback) {
-                    const randomName = Array(32)
-                        .fill(null)
-                        .map(() => Math.round(Math.random() * 16).toString(16))
-                        .join('');
-                    return callback(
-                        null,
-                        `${randomName}${extname(file.originalname)}`,
-                    );
-                },
-            }),
-        }),
-    )
-    uploadFile(@UploadedFile() file) {
-        console.log(file);
+    @UseInterceptors(FileInterceptor('image', saveImage))
+    uploadFile(@UploadedFile() file: Express.Multer.File) {
+        const fileName = file?.filename;
+
+        if (!fileName)
+            throw new BadRequestException('Valid file is png, jpg, jpeg');
+
+        const imagePath = join(process.cwd(), 'uploads/') + file.filename;
+
         return {
             url: `${this.configService.get('UPLOAD_URL')}/${file.filename}`,
         };
