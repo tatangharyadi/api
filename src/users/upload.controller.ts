@@ -11,7 +11,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
-import { saveImage } from 'src/common/image.storage';
+import { saveImageDisk } from 'src/common/image.storage';
 import { join } from 'path';
 
 @Controller()
@@ -19,7 +19,7 @@ export class UploadController {
     constructor(private readonly configService: ConfigService) {}
 
     @Post('upload')
-    @UseInterceptors(FileInterceptor('image', saveImage))
+    @UseInterceptors(FileInterceptor('image', saveImageDisk))
     uploadFile(@UploadedFile() file: Express.Multer.File) {
         const fileName = file?.filename;
 

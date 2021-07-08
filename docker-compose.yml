@@ -24,7 +24,7 @@ services:
       - 5432:5432
     volumes:
       - .dbdata:/var/lib/postgresql/data
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: secret
@@ -33,13 +33,14 @@ services:
   redis:
     container_name: redis
     image: redis
+    restart: unless-stopped
     ports:
       - 6379:6379
 
   mailhog:
     container_name: mailhog
     image: mailhog/mailhog
-    restart: always
+    restart: unless-stopped
     ports:
       - 1025:1025
       - 8025:8025

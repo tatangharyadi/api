@@ -10,7 +10,7 @@ const validMimeTypes: validMimeType[] = [
     'image/jpeg',
 ];
 
-export const saveImage = {
+export const saveImageDisk = {
     storage: diskStorage({
         destination: './uploads',
         filename: (_, file, callback) => {
