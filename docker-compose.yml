@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - 8080:3000
+      - 8081:3000
     volumes:
       - .:/app
     depends_on:
@@ -23,7 +23,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - .dbdata:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     restart: unless-stopped
     environment:
       POSTGRES_USER: root
@@ -51,3 +51,7 @@ networks:
   default:
     name: dev
     driver: bridge
+
+volumes:
+  postgres_data:
+    name: postgres-data

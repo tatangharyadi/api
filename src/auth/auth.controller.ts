@@ -16,11 +16,13 @@ import { User } from '../users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('auth')
 @UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
     constructor(
+        private readonly configService: ConfigService,
         private readonly authService: AuthService,
         private readonly userService: UsersService,
         private readonly eventEmitter: EventEmitter2,
@@ -45,11 +47,12 @@ export class AuthController {
     ) {
         const jwt = this.authService.getToken(user);
 
-        response.cookie('jwt', jwt, { httpOnly: true });
-
-        return {
-            user: user.email,
-        };
+        if (this.configService.get('JWT_DELIVERY') === 'cookie') {
+            response.cookie('jwt', jwt, { httpOnly: true });
+            return { user: user.email };
+        } else {
+            return { access_token: jwt };
+        }
     }
 
     @Get('profile')
@@ -61,7 +64,9 @@ export class AuthController {
     @Post('logout')
     @UseGuards(AuthGuard('jwt'))
     async logout(@Res({ passthrough: true }) response: Response) {
-        response.clearCookie('jwt');
+        if (this.configService.get('JWT_DELIVERY') === 'cookie') {
+            response.clearCookie('jwt');
+        }
 
         return {
             message: 'Success',
