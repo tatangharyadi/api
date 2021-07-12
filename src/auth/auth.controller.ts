@@ -51,7 +51,10 @@ export class AuthController {
             response.cookie('jwt', jwt, { httpOnly: true });
             return { user: user.email };
         } else {
-            return { access_token: jwt };
+            return {
+                user: user.email,
+                access_token: jwt,
+            };
         }
     }
 

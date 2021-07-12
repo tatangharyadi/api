@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     ports:
-      - 8081:3000
+      - 3000:3000
     volumes:
       - .:/app
     depends_on:
